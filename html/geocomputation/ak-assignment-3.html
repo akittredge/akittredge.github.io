@@ -14747,6 +14747,7 @@ Assignment 3</strong></p>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">countyDict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">countyName</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
         
+        
 <span class="c1"># Define function to display n most common names of counties</span>
 <span class="c1"># In the event of a tie, print n+1 most common names of counties</span>
 <span class="k">def</span> <span class="nf">countyFrequency</span> <span class="p">(</span><span class="n">countyDict</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -14755,7 +14756,7 @@ Assignment 3</strong></p>
     <span class="k">if</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There is a tie for the </span><span class="si">{}</span><span class="s1"> most common counties in the US. The </span><span class="si">{}</span><span class="s1"> most common counties are displayed below:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> counties in the US. They are found in states with the following codes:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> counties in the US. They are found in the following states:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
             <span class="n">codeList</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">codeList_idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Iterator for index</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">featureList</span><span class="p">:</span>
@@ -14768,7 +14769,7 @@ Assignment 3</strong></p>
     <span class="c1"># No tie</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> counties in the US. They are found in states with the following codes:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> counties in the US. They are found in the following states:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
             <span class="n">codeList</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">countyDict_sort</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">codeList_idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Iterator for index</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">featureList</span><span class="p">:</span>
@@ -14828,11 +14829,11 @@ Assignment 3</strong></p>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>There is a tie for the 2 most common counties in the US. The 3 most common counties are displayed below:
 
-There are 31 Washington counties in the US. They are found in states with the following codes:
+There are 31 Washington counties in the US. They are found in the following states:
 [&#39;CO&#39;, &#39;FL&#39;, &#39;AR&#39;, &#39;IL&#39;, &#39;IA&#39;, &#39;ME&#39;, &#39;MD&#39;, &#39;MO&#39;, &#39;TN&#39;, &#39;OK&#39;, &#39;OR&#39;, &#39;WI&#39;, &#39;UT&#39;, &#39;VT&#39;, &#39;KS&#39;, &#39;IN&#39;, &#39;KY&#39;, &#39;MN&#39;, &#39;GA&#39;, &#39;AL&#39;, &#39;LA&#39;, &#39;ID&#39;, &#39;NY&#39;, &#39;NC&#39;, &#39;NE&#39;, &#39;MS&#39;, &#39;PA&#39;, &#39;OH&#39;, &#39;RI&#39;, &#39;VA&#39;, &#39;TX&#39;]
-There are 26 Franklin counties in the US. They are found in states with the following codes:
+There are 26 Franklin counties in the US. They are found in the following states:
 [&#39;GA&#39;, &#39;AL&#39;, &#39;IN&#39;, &#39;ID&#39;, &#39;KY&#39;, &#39;IA&#39;, &#39;MS&#39;, &#39;NY&#39;, &#39;TX&#39;, &#39;AR&#39;, &#39;FL&#39;, &#39;LA&#39;, &#39;ME&#39;, &#39;MA&#39;, &#39;IL&#39;, &#39;KS&#39;, &#39;MO&#39;, &#39;TN&#39;, &#39;NE&#39;, &#39;NC&#39;, &#39;PA&#39;, &#39;OH&#39;, &#39;VA&#39;, &#39;VA&#39;, &#39;WA&#39;, &#39;VT&#39;]
-There are 26 Jefferson counties in the US. They are found in states with the following codes:
+There are 26 Jefferson counties in the US. They are found in the following states:
 [&#39;IL&#39;, &#39;GA&#39;, &#39;IA&#39;, &#39;OR&#39;, &#39;CO&#39;, &#39;AR&#39;, &#39;FL&#39;, &#39;KS&#39;, &#39;KY&#39;, &#39;AL&#39;, &#39;LA&#39;, &#39;MS&#39;, &#39;ID&#39;, &#39;IN&#39;, &#39;MO&#39;, &#39;TN&#39;, &#39;TX&#39;, &#39;NY&#39;, &#39;OK&#39;, &#39;NE&#39;, &#39;MT&#39;, &#39;PA&#39;, &#39;OH&#39;, &#39;WV&#39;, &#39;WI&#39;, &#39;WA&#39;]
 </pre>
 </div>
@@ -14882,15 +14883,15 @@ There are 26 Jefferson counties in the US. They are found in states with the fol
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>There are 31 Washington counties in the US. They are found in states with the following codes:
+<pre>There are 31 Washington counties in the US. They are found in the following states:
 [&#39;CO&#39;, &#39;FL&#39;, &#39;AR&#39;, &#39;IL&#39;, &#39;IA&#39;, &#39;ME&#39;, &#39;MD&#39;, &#39;MO&#39;, &#39;TN&#39;, &#39;OK&#39;, &#39;OR&#39;, &#39;WI&#39;, &#39;UT&#39;, &#39;VT&#39;, &#39;KS&#39;, &#39;IN&#39;, &#39;KY&#39;, &#39;MN&#39;, &#39;GA&#39;, &#39;AL&#39;, &#39;LA&#39;, &#39;ID&#39;, &#39;NY&#39;, &#39;NC&#39;, &#39;NE&#39;, &#39;MS&#39;, &#39;PA&#39;, &#39;OH&#39;, &#39;RI&#39;, &#39;VA&#39;, &#39;TX&#39;]
-There are 26 Franklin counties in the US. They are found in states with the following codes:
+There are 26 Franklin counties in the US. They are found in the following states:
 [&#39;GA&#39;, &#39;AL&#39;, &#39;IN&#39;, &#39;ID&#39;, &#39;KY&#39;, &#39;IA&#39;, &#39;MS&#39;, &#39;NY&#39;, &#39;TX&#39;, &#39;AR&#39;, &#39;FL&#39;, &#39;LA&#39;, &#39;ME&#39;, &#39;MA&#39;, &#39;IL&#39;, &#39;KS&#39;, &#39;MO&#39;, &#39;TN&#39;, &#39;NE&#39;, &#39;NC&#39;, &#39;PA&#39;, &#39;OH&#39;, &#39;VA&#39;, &#39;VA&#39;, &#39;WA&#39;, &#39;VT&#39;]
-There are 26 Jefferson counties in the US. They are found in states with the following codes:
+There are 26 Jefferson counties in the US. They are found in the following states:
 [&#39;IL&#39;, &#39;GA&#39;, &#39;IA&#39;, &#39;OR&#39;, &#39;CO&#39;, &#39;AR&#39;, &#39;FL&#39;, &#39;KS&#39;, &#39;KY&#39;, &#39;AL&#39;, &#39;LA&#39;, &#39;MS&#39;, &#39;ID&#39;, &#39;IN&#39;, &#39;MO&#39;, &#39;TN&#39;, &#39;TX&#39;, &#39;NY&#39;, &#39;OK&#39;, &#39;NE&#39;, &#39;MT&#39;, &#39;PA&#39;, &#39;OH&#39;, &#39;WV&#39;, &#39;WI&#39;, &#39;WA&#39;]
-There are 24 Jackson counties in the US. They are found in states with the following codes:
+There are 24 Jackson counties in the US. They are found in the following states:
 [&#39;AR&#39;, &#39;MO&#39;, &#39;WI&#39;, &#39;CO&#39;, &#39;FL&#39;, &#39;KS&#39;, &#39;MI&#39;, &#39;KY&#39;, &#39;MN&#39;, &#39;GA&#39;, &#39;LA&#39;, &#39;AL&#39;, &#39;MS&#39;, &#39;IL&#39;, &#39;IA&#39;, &#39;IN&#39;, &#39;TN&#39;, &#39;TX&#39;, &#39;OK&#39;, &#39;OR&#39;, &#39;NC&#39;, &#39;OH&#39;, &#39;SD&#39;, &#39;WV&#39;]
-There are 24 Lincoln counties in the US. They are found in states with the following codes:
+There are 24 Lincoln counties in the US. They are found in the following states:
 [&#39;CO&#39;, &#39;KY&#39;, &#39;KS&#39;, &#39;MN&#39;, &#39;NE&#39;, &#39;MS&#39;, &#39;NM&#39;, &#39;NC&#39;, &#39;MT&#39;, &#39;GA&#39;, &#39;LA&#39;, &#39;ME&#39;, &#39;ID&#39;, &#39;TN&#39;, &#39;MO&#39;, &#39;OK&#39;, &#39;OR&#39;, &#39;NV&#39;, &#39;SD&#39;, &#39;WV&#39;, &#39;WI&#39;, &#39;AR&#39;, &#39;WY&#39;, &#39;WA&#39;]
 </pre>
 </div>
@@ -14926,16 +14927,9 @@ For each state, find:</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get a list of state codes. They are not consecutive and not (1, 51)</span>
-<span class="c1"># Possible to turn into a comprehension? Wasn&#39;t able to figure one out</span>
-<span class="n">stateCodeList</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">featureList</span><span class="p">:</span>
-    <span class="n">stateCode</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;STATE&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">stateCodeList</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">stateCode</span><span class="p">):</span>
-        <span class="k">pass</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">stateCodeList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stateCode</span><span class="p">)</span>
-
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get a list of state codes using set comprehension. They are not consecutive and not (1, 51)</span>
+<span class="n">stateCodeList</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;STATE&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">featureList</span><span class="p">}</span>
+        
 <span class="c1"># For each state code, get number of counties, smallest and largest county,</span>
 <span class="c1"># and total county size</span>
 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stateCodeList</span><span class="p">:</span>
@@ -14966,7 +14960,7 @@ For each state, find:</p>
     <span class="n">areaCounty_avg</span> <span class="o">=</span> <span class="n">areaCounty_total</span> <span class="o">/</span> <span class="n">stateCounties</span> <span class="c1"># Average county area</span>
         
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">) has </span><span class="si">{}</span><span class="s1"> counties.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stateName</span><span class="p">,</span> <span class="n">stateAbbrev</span><span class="p">,</span> <span class="n">stateCounties</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its largest county is </span><span class="si">{}</span><span class="s1"> which is </span><span class="si">{:.0f}</span><span class="s1"> square miles.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">largestCounty</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">largestCounty</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its largest county is </span><span class="si">{}</span><span class="s1"> which is </span><span class="si">{:.0f}</span><span class="s1"> square miles.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">largestCounty</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">largestCounty</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># {:.0f} removes the decimal from a floating point number</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its smallest county is </span><span class="si">{}</span><span class="s1"> which is </span><span class="si">{:.0f}</span><span class="s1"> square miles.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">smallestCounty</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">smallestCounty</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its total county area is </span><span class="si">{:.0f}</span><span class="s1"> square miles.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">areaCounty_total</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Its average county area is </span><span class="si">{:.0f}</span><span class="s1"> square miles.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">areaCounty_avg</span><span class="p">))</span>
@@ -14989,35 +14983,11 @@ For each state, find:</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Alaska (AK) has 29 counties.
-Its largest county is Yukon-Koyukuk which is 145505 square miles.
-Its smallest county is Skagway which is 452 square miles.
-Its total county area is 570641 square miles.
-Its average county area is 19677 square miles.
-
-Arizona (AZ) has 15 counties.
-Its largest county is Coconino which is 18619 square miles.
-Its smallest county is Santa Cruz which is 1237 square miles.
-Its total county area is 113594 square miles.
-Its average county area is 7573 square miles.
-
-Arkansas (AR) has 75 counties.
-Its largest county is Union which is 1039 square miles.
-Its smallest county is Lafayette which is 528 square miles.
-Its total county area is 52035 square miles.
-Its average county area is 694 square miles.
-
-Colorado (CO) has 64 counties.
-Its largest county is Las Animas which is 4773 square miles.
-Its smallest county is Broomfield which is 33 square miles.
-Its total county area is 103642 square miles.
-Its average county area is 1619 square miles.
-
-Connecticut (CT) has 8 counties.
-Its largest county is Litchfield which is 921 square miles.
-Its smallest county is Middlesex which is 369 square miles.
-Its total county area is 4842 square miles.
-Its average county area is 605 square miles.
+<pre>New Hampshire (NH) has 10 counties.
+Its largest county is Coos which is 1795 square miles.
+Its smallest county is Strafford which is 369 square miles.
+Its total county area is 8953 square miles.
+Its average county area is 895 square miles.
 
 Florida (FL) has 67 counties.
 Its largest county is Collier which is 1998 square miles.
@@ -15025,35 +14995,65 @@ Its smallest county is Union which is 244 square miles.
 Its total county area is 53625 square miles.
 Its average county area is 800 square miles.
 
-Geogia (GA) has 159 counties.
-Its largest county is Ware which is 892 square miles.
-Its smallest county is Clarke which is 119 square miles.
-Its total county area is 57513 square miles.
-Its average county area is 362 square miles.
+South Carolina (SC) has 46 counties.
+Its largest county is Horry which is 1134 square miles.
+Its smallest county is McCormick which is 359 square miles.
+Its total county area is 30061 square miles.
+Its average county area is 653 square miles.
 
-California (CA) has 58 counties.
-Its largest county is San Bernardino which is 20057 square miles.
-Its smallest county is San Francisco which is 47 square miles.
-Its total county area is 155779 square miles.
-Its average county area is 2686 square miles.
+Virginia (VA) has 134 counties.
+Its largest county is Pittsylvania which is 969 square miles.
+Its smallest county is Falls Church which is 2 square miles.
+Its total county area is 39490 square miles.
+Its average county area is 295 square miles.
 
-Alabama (AL) has 67 counties.
-Its largest county is Baldwin which is 1590 square miles.
-Its smallest county is Etowah which is 535 square miles.
-Its total county area is 50645 square miles.
-Its average county area is 756 square miles.
+Colorado (CO) has 64 counties.
+Its largest county is Las Animas which is 4773 square miles.
+Its smallest county is Broomfield which is 33 square miles.
+Its total county area is 103642 square miles.
+Its average county area is 1619 square miles.
 
-Illinois (IL) has 102 counties.
-Its largest county is McLean which is 1183 square miles.
-Its smallest county is Putnam which is 160 square miles.
-Its total county area is 55519 square miles.
-Its average county area is 544 square miles.
+Vermont (VT) has 14 counties.
+Its largest county is Windsor which is 969 square miles.
+Its smallest county is Grand Isle which is 82 square miles.
+Its total county area is 9217 square miles.
+Its average county area is 658 square miles.
 
-Indiana (IN) has 92 counties.
-Its largest county is Allen which is 657 square miles.
-Its smallest county is Ohio which is 86 square miles.
-Its total county area is 35826 square miles.
-Its average county area is 389 square miles.
+Connecticut (CT) has 8 counties.
+Its largest county is Litchfield which is 921 square miles.
+Its smallest county is Middlesex which is 369 square miles.
+Its total county area is 4842 square miles.
+Its average county area is 605 square miles.
+
+Kansas (KS) has 105 counties.
+Its largest county is Butler which is 1430 square miles.
+Its smallest county is Wyandotte which is 152 square miles.
+Its total county area is 81759 square miles.
+Its average county area is 779 square miles.
+
+Alaska (AK) has 29 counties.
+Its largest county is Yukon-Koyukuk which is 145505 square miles.
+Its smallest county is Skagway which is 452 square miles.
+Its total county area is 570641 square miles.
+Its average county area is 19677 square miles.
+
+North Dakota (ND) has 53 counties.
+Its largest county is McKenzie which is 2760 square miles.
+Its smallest county is Eddy which is 630 square miles.
+Its total county area is 69001 square miles.
+Its average county area is 1302 square miles.
+
+Idaho (ID) has 44 counties.
+Its largest county is Idaho which is 8477 square miles.
+Its smallest county is Payette which is 407 square miles.
+Its total county area is 82643 square miles.
+Its average county area is 1878 square miles.
+
+Arkansas (AR) has 75 counties.
+Its largest county is Union which is 1039 square miles.
+Its smallest county is Lafayette which is 528 square miles.
+Its total county area is 52035 square miles.
+Its average county area is 694 square miles.
 
 Iowa (IA) has 99 counties.
 Its largest county is Kossuth which is 973 square miles.
@@ -15067,149 +15067,23 @@ Its smallest county is Kalawao which is 12 square miles.
 Its total county area is 6423 square miles.
 Its average county area is 1285 square miles.
 
-Idaho (ID) has 44 counties.
-Its largest county is Idaho which is 8477 square miles.
-Its smallest county is Payette which is 407 square miles.
-Its total county area is 82643 square miles.
-Its average county area is 1878 square miles.
-
-Kansas (KS) has 105 counties.
-Its largest county is Butler which is 1430 square miles.
-Its smallest county is Wyandotte which is 152 square miles.
-Its total county area is 81759 square miles.
-Its average county area is 779 square miles.
-
-Kentucky (KY) has 120 counties.
-Its largest county is Pike which is 787 square miles.
-Its smallest county is Robertson which is 100 square miles.
-Its total county area is 39486 square miles.
-Its average county area is 329 square miles.
-
-Louisiana (LA) has 64 counties.
-Its largest county is Vernon which is 1328 square miles.
-Its smallest county is Orleans which is 169 square miles.
-Its total county area is 43204 square miles.
-Its average county area is 675 square miles.
-
 Michigan (MI) has 83 counties.
 Its largest county is Marquette which is 1808 square miles.
 Its smallest county is Benzie which is 320 square miles.
 Its total county area is 56539 square miles.
 Its average county area is 681 square miles.
 
-Minnesota (MN) has 87 counties.
-Its largest county is St. Louis which is 6247 square miles.
-Its smallest county is Ramsey which is 152 square miles.
-Its total county area is 79627 square miles.
-Its average county area is 915 square miles.
+Arizona (AZ) has 15 counties.
+Its largest county is Coconino which is 18619 square miles.
+Its smallest county is Santa Cruz which is 1237 square miles.
+Its total county area is 113594 square miles.
+Its average county area is 7573 square miles.
 
-Mississippi (MS) has 82 counties.
-Its largest county is Yazoo which is 923 square miles.
-Its smallest county is Alcorn which is 400 square miles.
-Its total county area is 46923 square miles.
-Its average county area is 572 square miles.
-
-Maine (ME) has 16 counties.
-Its largest county is Aroostook which is 6671 square miles.
-Its smallest county is Sagadahoc which is 254 square miles.
-Its total county area is 30843 square miles.
-Its average county area is 1928 square miles.
-
-Maryland (MD) has 24 counties.
-Its largest county is Frederick which is 660 square miles.
-Its smallest county is Baltimore which is 81 square miles.
-Its total county area is 9707 square miles.
-Its average county area is 404 square miles.
-
-Massachusetts (MA) has 14 counties.
-Its largest county is Worcester which is 1511 square miles.
-Its smallest county is Nantucket which is 45 square miles.
-Its total county area is 7800 square miles.
-Its average county area is 557 square miles.
-
-Montana (MT) has 56 counties.
-Its largest county is Beaverhead which is 5542 square miles.
-Its smallest county is Silver Bow which is 718 square miles.
-Its total county area is 145546 square miles.
-Its average county area is 2599 square miles.
-
-Nebraska (NE) has 93 counties.
-Its largest county is Cherry which is 5960 square miles.
-Its smallest county is Sarpy which is 239 square miles.
-Its total county area is 76824 square miles.
-Its average county area is 826 square miles.
-
-Nevada (NV) has 17 counties.
-Its largest county is Nye which is 18182 square miles.
-Its smallest county is Carson City which is 145 square miles.
-Its total county area is 109781 square miles.
-Its average county area is 6458 square miles.
-
-New Hampshire (NH) has 10 counties.
-Its largest county is Coos which is 1795 square miles.
-Its smallest county is Strafford which is 369 square miles.
-Its total county area is 8953 square miles.
-Its average county area is 895 square miles.
-
-New Jersey (NJ) has 21 counties.
-Its largest county is Burlington which is 799 square miles.
-Its smallest county is Hudson which is 46 square miles.
-Its total county area is 7354 square miles.
-Its average county area is 350 square miles.
-
-New Mexico (NM) has 33 counties.
-Its largest county is Catron which is 6924 square miles.
-Its smallest county is Los Alamos which is 109 square miles.
-Its total county area is 121298 square miles.
-Its average county area is 3676 square miles.
-
-Missouri (MO) has 115 counties.
-Its largest county is Texas which is 1177 square miles.
-Its smallest county is St. Louis which is 62 square miles.
-Its total county area is 68742 square miles.
-Its average county area is 598 square miles.
-
-North Carolina (NC) has 100 counties.
-Its largest county is Robeson which is 949 square miles.
-Its smallest county is Chowan which is 172 square miles.
-Its total county area is 48618 square miles.
-Its average county area is 486 square miles.
-
-North Dakota (ND) has 53 counties.
-Its largest county is McKenzie which is 2760 square miles.
-Its smallest county is Eddy which is 630 square miles.
-Its total county area is 69001 square miles.
-Its average county area is 1302 square miles.
-
-Ohio (OH) has 88 counties.
-Its largest county is Ashtabula which is 702 square miles.
-Its smallest county is Lake which is 227 square miles.
-Its total county area is 40861 square miles.
-Its average county area is 464 square miles.
-
-Oklahoma (OK) has 77 counties.
-Its largest county is Osage which is 2246 square miles.
-Its smallest county is Marshall which is 371 square miles.
-Its total county area is 68595 square miles.
-Its average county area is 891 square miles.
-
-New York (NY) has 62 counties.
-Its largest county is St. Lawrence which is 2680 square miles.
-Its smallest county is New York which is 23 square miles.
-Its total county area is 47126 square miles.
-Its average county area is 760 square miles.
-
-South Carolina (SC) has 46 counties.
-Its largest county is Horry which is 1134 square miles.
-Its smallest county is McCormick which is 359 square miles.
-Its total county area is 30061 square miles.
-Its average county area is 653 square miles.
-
-South Dakota (SD) has 66 counties.
-Its largest county is Meade which is 3471 square miles.
-Its smallest county is Clay which is 412 square miles.
-Its total county area is 75811 square miles.
-Its average county area is 1149 square miles.
+Geogia (GA) has 159 counties.
+Its largest county is Ware which is 892 square miles.
+Its smallest county is Clarke which is 119 square miles.
+Its total county area is 57513 square miles.
+Its average county area is 362 square miles.
 
 Tennessee (TN) has 95 counties.
 Its largest county is Shelby which is 763 square miles.
@@ -15217,17 +15091,23 @@ Its smallest county is Trousdale which is 114 square miles.
 Its total county area is 41235 square miles.
 Its average county area is 434 square miles.
 
-Oregon (OR) has 36 counties.
-Its largest county is Harney which is 10133 square miles.
-Its smallest county is Multnomah which is 431 square miles.
-Its total county area is 95988 square miles.
-Its average county area is 2666 square miles.
+Indiana (IN) has 92 counties.
+Its largest county is Allen which is 657 square miles.
+Its smallest county is Ohio which is 86 square miles.
+Its total county area is 35826 square miles.
+Its average county area is 389 square miles.
 
-Pennsylvania (PA) has 67 counties.
-Its largest county is Lycoming which is 1229 square miles.
-Its smallest county is Montour which is 130 square miles.
-Its total county area is 44743 square miles.
-Its average county area is 668 square miles.
+Kentucky (KY) has 120 counties.
+Its largest county is Pike which is 787 square miles.
+Its smallest county is Robertson which is 100 square miles.
+Its total county area is 39486 square miles.
+Its average county area is 329 square miles.
+
+New Mexico (NM) has 33 counties.
+Its largest county is Catron which is 6924 square miles.
+Its smallest county is Los Alamos which is 109 square miles.
+Its total county area is 121298 square miles.
+Its average county area is 3676 square miles.
 
 Texas (TX) has 254 counties.
 Its largest county is Brewster which is 6184 square miles.
@@ -15235,23 +15115,71 @@ Its smallest county is Rockwall which is 127 square miles.
 Its total county area is 261232 square miles.
 Its average county area is 1028 square miles.
 
-Utah (UT) has 29 counties.
-Its largest county is San Juan which is 7820 square miles.
-Its smallest county is Davis which is 299 square miles.
-Its total county area is 82170 square miles.
-Its average county area is 2833 square miles.
+California (CA) has 58 counties.
+Its largest county is San Bernardino which is 20057 square miles.
+Its smallest county is San Francisco which is 47 square miles.
+Its total county area is 155779 square miles.
+Its average county area is 2686 square miles.
 
-Washington (WA) has 39 counties.
-Its largest county is Okanogan which is 5268 square miles.
-Its smallest county is San Juan which is 174 square miles.
-Its total county area is 66456 square miles.
-Its average county area is 1704 square miles.
+Nebraska (NE) has 93 counties.
+Its largest county is Cherry which is 5960 square miles.
+Its smallest county is Sarpy which is 239 square miles.
+Its total county area is 76824 square miles.
+Its average county area is 826 square miles.
 
-West Virginia (WV) has 55 counties.
-Its largest county is Randolph which is 1040 square miles.
-Its smallest county is Hancock which is 83 square miles.
-Its total county area is 24038 square miles.
-Its average county area is 437 square miles.
+Mississippi (MS) has 82 counties.
+Its largest county is Yazoo which is 923 square miles.
+Its smallest county is Alcorn which is 400 square miles.
+Its total county area is 46923 square miles.
+Its average county area is 572 square miles.
+
+South Dakota (SD) has 66 counties.
+Its largest county is Meade which is 3471 square miles.
+Its smallest county is Clay which is 412 square miles.
+Its total county area is 75811 square miles.
+Its average county area is 1149 square miles.
+
+Oklahoma (OK) has 77 counties.
+Its largest county is Osage which is 2246 square miles.
+Its smallest county is Marshall which is 371 square miles.
+Its total county area is 68595 square miles.
+Its average county area is 891 square miles.
+
+Minnesota (MN) has 87 counties.
+Its largest county is St. Louis which is 6247 square miles.
+Its smallest county is Ramsey which is 152 square miles.
+Its total county area is 79627 square miles.
+Its average county area is 915 square miles.
+
+Oregon (OR) has 36 counties.
+Its largest county is Harney which is 10133 square miles.
+Its smallest county is Multnomah which is 431 square miles.
+Its total county area is 95988 square miles.
+Its average county area is 2666 square miles.
+
+New Jersey (NJ) has 21 counties.
+Its largest county is Burlington which is 799 square miles.
+Its smallest county is Hudson which is 46 square miles.
+Its total county area is 7354 square miles.
+Its average county area is 350 square miles.
+
+Rhode Island (RI) has 5 counties.
+Its largest county is Providence which is 410 square miles.
+Its smallest county is Bristol which is 24 square miles.
+Its total county area is 1034 square miles.
+Its average county area is 207 square miles.
+
+Missouri (MO) has 115 counties.
+Its largest county is Texas which is 1177 square miles.
+Its smallest county is St. Louis which is 62 square miles.
+Its total county area is 68742 square miles.
+Its average county area is 598 square miles.
+
+Pennsylvania (PA) has 67 counties.
+Its largest county is Lycoming which is 1229 square miles.
+Its smallest county is Montour which is 130 square miles.
+Its total county area is 44743 square miles.
+Its average county area is 668 square miles.
 
 Wisconsin (WI) has 72 counties.
 Its largest county is Marathon which is 1545 square miles.
@@ -15259,11 +15187,41 @@ Its smallest county is Pepin which is 232 square miles.
 Its total county area is 54158 square miles.
 Its average county area is 752 square miles.
 
+Alabama (AL) has 67 counties.
+Its largest county is Baldwin which is 1590 square miles.
+Its smallest county is Etowah which is 535 square miles.
+Its total county area is 50645 square miles.
+Its average county area is 756 square miles.
+
+Illinois (IL) has 102 counties.
+Its largest county is McLean which is 1183 square miles.
+Its smallest county is Putnam which is 160 square miles.
+Its total county area is 55519 square miles.
+Its average county area is 544 square miles.
+
 Wyoming (WY) has 23 counties.
 Its largest county is Sweetwater which is 10427 square miles.
 Its smallest county is Hot Springs which is 2004 square miles.
 Its total county area is 97093 square miles.
 Its average county area is 4221 square miles.
+
+Maine (ME) has 16 counties.
+Its largest county is Aroostook which is 6671 square miles.
+Its smallest county is Sagadahoc which is 254 square miles.
+Its total county area is 30843 square miles.
+Its average county area is 1928 square miles.
+
+Louisiana (LA) has 64 counties.
+Its largest county is Vernon which is 1328 square miles.
+Its smallest county is Orleans which is 169 square miles.
+Its total county area is 43204 square miles.
+Its average county area is 675 square miles.
+
+Washington (WA) has 39 counties.
+Its largest county is Okanogan which is 5268 square miles.
+Its smallest county is San Juan which is 174 square miles.
+Its total county area is 66456 square miles.
+Its average county area is 1704 square miles.
 
 None (PR) has 78 counties.
 Its largest county is Arecibo which is 126 square miles.
@@ -15271,23 +15229,11 @@ Its smallest county is Cata�o which is 5 square miles.
 Its total county area is 3424 square miles.
 Its average county area is 44 square miles.
 
-Vermont (VT) has 14 counties.
-Its largest county is Windsor which is 969 square miles.
-Its smallest county is Grand Isle which is 82 square miles.
-Its total county area is 9217 square miles.
-Its average county area is 658 square miles.
-
-Virginia (VA) has 134 counties.
-Its largest county is Pittsylvania which is 969 square miles.
-Its smallest county is Falls Church which is 2 square miles.
-Its total county area is 39490 square miles.
-Its average county area is 295 square miles.
-
-Delaware (DE) has 3 counties.
-Its largest county is Sussex which is 936 square miles.
-Its smallest county is New Castle which is 426 square miles.
-Its total county area is 1949 square miles.
-Its average county area is 650 square miles.
+Nevada (NV) has 17 counties.
+Its largest county is Nye which is 18182 square miles.
+Its smallest county is Carson City which is 145 square miles.
+Its total county area is 109781 square miles.
+Its average county area is 6458 square miles.
 
 District of Columbia (DC) has 1 counties.
 Its largest county is District of Columbia which is 61 square miles.
@@ -15295,11 +15241,59 @@ Its smallest county is District of Columbia which is 61 square miles.
 Its total county area is 61 square miles.
 Its average county area is 61 square miles.
 
-Rhode Island (RI) has 5 counties.
-Its largest county is Providence which is 410 square miles.
-Its smallest county is Bristol which is 24 square miles.
-Its total county area is 1034 square miles.
-Its average county area is 207 square miles.
+Montana (MT) has 56 counties.
+Its largest county is Beaverhead which is 5542 square miles.
+Its smallest county is Silver Bow which is 718 square miles.
+Its total county area is 145546 square miles.
+Its average county area is 2599 square miles.
+
+Delaware (DE) has 3 counties.
+Its largest county is Sussex which is 936 square miles.
+Its smallest county is New Castle which is 426 square miles.
+Its total county area is 1949 square miles.
+Its average county area is 650 square miles.
+
+Utah (UT) has 29 counties.
+Its largest county is San Juan which is 7820 square miles.
+Its smallest county is Davis which is 299 square miles.
+Its total county area is 82170 square miles.
+Its average county area is 2833 square miles.
+
+Maryland (MD) has 24 counties.
+Its largest county is Frederick which is 660 square miles.
+Its smallest county is Baltimore which is 81 square miles.
+Its total county area is 9707 square miles.
+Its average county area is 404 square miles.
+
+Ohio (OH) has 88 counties.
+Its largest county is Ashtabula which is 702 square miles.
+Its smallest county is Lake which is 227 square miles.
+Its total county area is 40861 square miles.
+Its average county area is 464 square miles.
+
+New York (NY) has 62 counties.
+Its largest county is St. Lawrence which is 2680 square miles.
+Its smallest county is New York which is 23 square miles.
+Its total county area is 47126 square miles.
+Its average county area is 760 square miles.
+
+Massachusetts (MA) has 14 counties.
+Its largest county is Worcester which is 1511 square miles.
+Its smallest county is Nantucket which is 45 square miles.
+Its total county area is 7800 square miles.
+Its average county area is 557 square miles.
+
+North Carolina (NC) has 100 counties.
+Its largest county is Robeson which is 949 square miles.
+Its smallest county is Chowan which is 172 square miles.
+Its total county area is 48618 square miles.
+Its average county area is 486 square miles.
+
+West Virginia (WV) has 55 counties.
+Its largest county is Randolph which is 1040 square miles.
+Its smallest county is Hancock which is 83 square miles.
+Its total county area is 24038 square miles.
+Its average county area is 437 square miles.
 
 </pre>
 </div>
@@ -15316,7 +15310,7 @@ Its average county area is 207 square miles.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Save new geojson file with state abbreviations and full state names:</p>
+<p><strong>Task 4:</strong> Save new geojson file with state abbreviations and full state names:</p>
 
 </div>
 </div>
