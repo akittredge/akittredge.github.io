@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ak-assignment-4</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>ak-assignment-4.1</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14593,12 +14593,12 @@ Assignment 4</strong></p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>Task 1:</strong> Following the example code, add Triangle class.</p>
+<p><strong>Task 1:</strong> Following the example code, add a Triangle class.</p>
 <ul>
 <li>Write testing code to verify code works as expected</li>
-<li>Options for defining triange:<ul>
+<li>Options for defining triangle:<ul>
 <li>Use single side attribute to create equilateral triangle</li>
-<li>Use coordinates to define triange</li>
+<li>Use coordinates to define triangle</li>
 </ul>
 </li>
 </ul>
@@ -14771,7 +14771,7 @@ Assignment 4</strong></p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Bill and my color is  BLUE
+<pre>My name is  Tamica and my color is  BLUE
 My area is  64
 </pre>
 </div>
@@ -14817,10 +14817,10 @@ My area is  64
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[&lt;__main__.Circle object at 0x1107a8b20&gt;, &lt;__main__.Circle object at 0x1107ab340&gt;]
-My name is  Sally and my color is  PURPLE
-My name is  Bill and my color is  RED
-[&#39;Name: Sally, Color: PURPLE, Area: 12.566370614359172&#39;, &#39;Name: Bill, Color: RED, Area: 28.274333882308138&#39;]
+<pre>[&lt;__main__.Circle object at 0x1035370a0&gt;, &lt;__main__.Circle object at 0x103535c00&gt;]
+My name is  Sally and my color is  RED
+My name is  Josh and my color is  PURPLE
+[&#39;Name: Sally, Color: RED, Area: 12.566370614359172&#39;, &#39;Name: Josh, Color: PURPLE, Area: 28.274333882308138&#39;]
 </pre>
 </div>
 </div>
@@ -14908,7 +14908,7 @@ My name is  Bill and my color is  RED
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Hussain and my color is  PURPLE
+<pre>My name is  Hussain and my color is  BLUE
 My area is:  3.4641016151377544
 </pre>
 </div>
@@ -14963,7 +14963,7 @@ My area is:  3.4641016151377544
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Hussain and my color is  PURPLE
+<pre>My name is  Josh and my color is  RED
 My area is:  3.4641016151377544
 </pre>
 </div>
@@ -14980,7 +14980,7 @@ My area is:  3.4641016151377544
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>It doesn't. Modify the subclass to handle a non-positive length side:</p>
+<p>It doesn't. Modify the subclass to handle a non-positive length side when computing area:</p>
 
 </div>
 </div>
@@ -14998,7 +14998,7 @@ My area is:  3.4641016151377544
         <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">=</span> <span class="n">side</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">side</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">*</span> <span class="n">mth</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Please input a positive number to calculate area.&quot;</span><span class="p">)</span>
@@ -15042,7 +15042,7 @@ My area is:  3.4641016151377544
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Josh and my color is  BLUE
+<pre>My name is  Sally and my color is  PURPLE
 My area is:  Please input a positive number to calculate area.
 </pre>
 </div>
@@ -15124,7 +15124,7 @@ My area is:  Please input a positive number to calculate area.
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Josh and my color is  RED
+<pre>My name is  Lammar and my color is  BLUE
 My area is:  16.5
 </pre>
 </div>
@@ -15179,7 +15179,7 @@ My area is:  16.5
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Lammar and my color is  RED
+<pre>My name is  Josh and my color is  BLUE
 My area is:  16.5
 </pre>
 </div>
@@ -15222,7 +15222,7 @@ My area is:  16.5
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Josh and my color is  RED
+<pre>My name is  Sally and my color is  RED
 My area is:  16.5
 </pre>
 </div>
@@ -15277,7 +15277,50 @@ My area is:  16.5
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>My name is  Sally and my color is  RED
+<pre>My name is  Josh and my color is  PURPLE
+My area is:  129.5
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">myList</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
+<span class="n">myTriangle</span> <span class="o">=</span> <span class="n">coordTriangle</span><span class="p">(</span><span class="n">myList</span><span class="p">)</span>
+<span class="n">myTriangle</span><span class="o">.</span><span class="n">print_name</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My area is: &#39;</span><span class="p">,</span> <span class="n">myTriangle</span><span class="o">.</span><span class="n">area</span><span class="p">())</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>My name is  Sally and my color is  BLUE
 My area is:  129.5
 </pre>
 </div>
