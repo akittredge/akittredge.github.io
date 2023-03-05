@@ -111,7 +111,7 @@ function drawDay(ctx, radius){
   var dayNum = now.getDay();
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var dayAbbrev = days[dayNum];
-  ctx.strokeRect(radius * 0.135, -radius *0.09, radius*0.325, radius*0.18);
+  ctx.strokeRect(radius * 0.135, -radius *0.0975, radius*0.325, radius*0.18);
   ctx.font = (radius * 0.15) + "px arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
@@ -125,7 +125,7 @@ function drawDate(ctx, radius){
     zero = "0";
     nowDate = zero.concat(nowDate.toString()); 
   } 
-  ctx.strokeRect(radius * 0.5, -radius *0.09, radius*0.2, radius*0.18);
+  ctx.strokeRect(radius * 0.5, -radius *0.0975, radius*0.2, radius*0.18);
   ctx.font = (radius * 0.15) + "px arial";
   ctx.textBaseline = "middle";
   ctx.textAlign = "center";
