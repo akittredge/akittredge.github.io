@@ -31,8 +31,8 @@ svg.selectAll("g").remove();
 svg
     .append("g")
     .append("text")
-    .attr("x", 60)
-    .attr("y", 50)
+    .attr("x", 12)
+    .attr("y", 30)
     .attr("font-size", 30)
     .attr("fill", 'black')
     .attr("font-family", "monospace")
