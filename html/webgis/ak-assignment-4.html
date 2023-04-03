@@ -99,18 +99,21 @@
 	<meta name="description" content="Write some words to describe your html page">
 
 	<script>
+		let leftPctg = 5, midPctg = 90, rightPctg = 5;
 		// $(".test").hide() -- hides all elements with class="test"
 		let reAlighDIVs = () => {
 			let midHeight = window.innerHeight - $(".pageHeader").height() - $(".pageFooter").height();
-			$(".pageContent").height(midHeight).width("90%");
-			$(".pageLeftMenu").height(midHeight).width("5%");
-			$(".pageRightMenu").height(midHeight).width("5%");
+			$(".pageContent").height(midHeight).width(midPctg+"%");
+			$(".pageLeftMenu").height(midHeight).width(leftPctg+"%");
+			$(".pageRightMenu").height(midHeight).width(rightPctg+"%");
 
             $(".pageLeftMenu").resizable("instance").option("maxWidth", $(".pageHeader").prop("clientWidth")*.45);
 			$(".pageRightMenu").resizable("instance").option("maxWidth", $(".pageHeader").prop("clientWidth")*.45);
 		}
 
 		$(function () { // Document ready event
+			
+			
 			$(".pageLeftMenu").resizable({
 				animate: false,
 				handles: "e",
@@ -124,12 +127,12 @@
 					$(".pageRightMenu").width(rightWidth);
 				},
 				stop: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
-                    let totWidth =  $(".pageHeader").prop("clientWidth"),
-					    rightWidth = $(".pageRightMenu").outerWidth(true),
-                        leftWidth = $(".pageLeftMenu").outerWidth(true),
+                    let totWidth =  $(".pageHeader").prop("clientWidth");
+					    rightWidth = $(".pageRightMenu").outerWidth(true);
+                        leftWidth = $(".pageLeftMenu").outerWidth(true);
 					    midWidth = totWidth - leftWidth - rightWidth;
 
-                    let leftPctg = Math.round(100.0*leftWidth/totWidth),
+                    	leftPctg = Math.round(100.0*leftWidth/totWidth),
                         midPctg =  Math.round(100.0*midWidth/totWidth),
                         rightPctg = 100 - leftPctg - midPctg;
 
@@ -148,22 +151,22 @@
 				resize: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
 					$(window).off('resize');
 
-					let rightWidth = $(".pageRightMenu").outerWidth(true);
-					let midWidth = $(".pageHeader").prop("clientWidth") - $(".pageLeftMenu").outerWidth(true) - rightWidth;
+					rightWidth = $(".pageRightMenu").outerWidth(true);
+					midWidth = $(".pageHeader").prop("clientWidth") - $(".pageLeftMenu").outerWidth(true) - rightWidth;
 					$(".pageContent").innerWidth(midWidth-1);
 					$(".pageRightMenu").width(rightWidth);
 
 				},
 				stop: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
-                    let totWidth =  $(".pageHeader").prop("clientWidth"),
-					    rightWidth = $(".pageRightMenu").outerWidth(true),
-                        leftWidth = $(".pageLeftMenu").outerWidth(true),
+                    let totWidth =  $(".pageHeader").prop("clientWidth");
+					    rightWidth = $(".pageRightMenu").outerWidth(true);
+                        leftWidth = $(".pageLeftMenu").outerWidth(true);
 					    midWidth = totWidth - leftWidth - rightWidth;
 
 
-                    let rightPctg = Math.round(100.0*rightWidth/totWidth),
-                        midPctg =  Math.round(100.0*midWidth/totWidth),
-                        leftPctg = 100 - rightPctg - midPctg;
+					rightPctg = Math.round(100.0*rightWidth/totWidth),
+					midPctg =  Math.round(100.0*midWidth/totWidth),
+					leftPctg = 100 - rightPctg - midPctg;
 
 					$(".pageContent").innerWidth(midPctg + "%");
                     $(".pageLeftMenu").width(leftPctg + "%")
