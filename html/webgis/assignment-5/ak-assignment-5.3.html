@@ -317,7 +317,14 @@
 
 			var coolingSites = L.geoJson(null, {
 				pointToLayer: function(feature, latlng) {
-					return L.marker(latlng);
+					return L.circleMarker(latlng,
+					{
+						stroke: true,
+						weight: 2	,
+						color: "#2b8cbe",
+						radius: 6,
+
+					});
 				},
 				onEachFeature: (f, l) => {
                     //var pointPopup = 
@@ -336,7 +343,9 @@
                     
                     l.on({
                         click: (e) => {
-                            var coord = e.latlng;
+                            coolingSites.resetStyle();
+							e.target.setStyle({fillColor: "#00FF00"});
+							var coord = e.latlng;
                             var lat = coord.lat;
                             var lng = coord.lng;
 
@@ -356,12 +365,11 @@
 							}
 							
 							var clickNearestPoint = closestPoints[1];
-							
+							//clickNearestPoint.setStyle({fillColor: "#0000FF"});
 							
 							nearest_featureType = clickNearestPoint.properties.FeatureType;
 							nearest_propertyName = clickNearestPoint.properties.PropertyName;
 							
-
 
 							info_p.innerHTML = 
 								e.target.feature.properties.FeatureType + "<br>" +
@@ -374,8 +382,6 @@
                 }
 			});
             
-
-
 			var nearest_featureType;
 			var nearest_propertyName;
 
