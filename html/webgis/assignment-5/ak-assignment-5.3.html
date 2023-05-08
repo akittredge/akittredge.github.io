@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""
+    />
+    <script
+    src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""
+    ></script>
+	
+	<script src="js/leaflet-providers.js"></script>
+
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+        rel='stylesheet' />
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+
+	<script src='./js/leaflet-search.js'></script>
+    <link href='./css/leaflet-search.min.css' rel='stylesheet' />
+	<script src="https://npmcdn.com/leaflet-geometryutil"></script>
+    
+	<style>
+		
+		body {
+			height: 100%;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			border: 0;
+			background-attachment: fixed;
+			background-size: 100% auto;
+		}
+
+		.blended_grid {
+			display: block;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			margin: 0px auto 0 auto;
+		}
+
+		.pageHeader {
+			display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #eff3ff;
+			float: left;
+			clear: none;
+			height: 100px;
+			width: 100%;
+            font-family:sans-serif;
+            font-weight: bold;
+		}
+
+		.pageLeftMenu {
+			background-color: #eff3ff;
+			float: left;
+			clear: none;
+			height: 800px;
+			width: 5%;
+		}
+
+		.pageContent {
+			background-color: rgba(0, 0, 0, 0.5);
+			float: left;
+			clear: none;
+			height: 800px;
+			width: 90%;
+		}
+
+		.pageRightMenu {
+			background-color: #eff3ff;
+			float: right;
+			clear: none;
+			overflow: auto;
+			height: 800px;
+			width: 5%;
+			left:0 !important;
+			
+		}
+
+		.pageFooter {
+			background-color: #eff3ff;
+			float: left;
+			clear: none;
+			height: 50px;
+			width: 100%;
+		}
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+		.info {
+			padding: 6px 8px;
+			font: 12px/14px Arial, Helvetica, sans-serif;
+			background: rgba(255,255,255,1);
+			box-shadow: none;
+			border-radius: 5px;
+			border: 2px solid rgba(0,0,0,0.2);
+			width: 16.5em;
+		}
+		
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777777;
+		}
+		.info #current_feature {
+			margin: 6px 0;
+		}
+
+	</style>
+
+	<title>WebGIS Assignment 5</title>
+	<meta name="description" content="Write some words to describe your html page">
+
+	<script>
+		let leftPctg = 5, midPctg = 90, rightPctg = 5;
+		// $(".test").hide() -- hides all elements with class="test"
+		let reAlighDIVs = () => {
+			let midHeight = window.innerHeight - $(".pageHeader").height() - $(".pageFooter").height();
+			$(".pageContent").height(midHeight).width(midPctg+"%");
+			$(".pageLeftMenu").height(midHeight).width(leftPctg+"%");
+			$(".pageRightMenu").height(midHeight).width(rightPctg+"%");
+
+            $(".pageLeftMenu").resizable("instance").option("maxWidth", $(".pageHeader").prop("clientWidth")*.45);
+			$(".pageRightMenu").resizable("instance").option("maxWidth", $(".pageHeader").prop("clientWidth")*.45);
+		}
+
+		$(function () { // Document ready event
+			
+			
+			$(".pageLeftMenu").resizable({
+				animate: false,
+				handles: "e",
+                maxWidth: $(".pageHeader").prop("clientWidth")*.45,
+				resize: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+					$(window).off('resize');
+
+					let rightWidth = $(".pageRightMenu").outerWidth(true);
+					let midWidth = $(".pageHeader").prop("clientWidth") - $(".pageLeftMenu").outerWidth(true) - rightWidth;
+					$(".pageContent").innerWidth(midWidth-1);
+					$(".pageRightMenu").width(rightWidth);
+				},
+				stop: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+                    let totWidth =  $(".pageHeader").prop("clientWidth");
+					    rightWidth = $(".pageRightMenu").outerWidth(true);
+                        leftWidth = $(".pageLeftMenu").outerWidth(true);
+					    midWidth = totWidth - leftWidth - rightWidth;
+
+                    	leftPctg = Math.round(100.0*leftWidth/totWidth),
+                        midPctg =  Math.round(100.0*midWidth/totWidth),
+                        rightPctg = 100 - leftPctg - midPctg;
+
+					$(".pageContent").innerWidth(midPctg + "%");
+                    $(".pageLeftMenu").width(leftPctg + "%")
+					$(".pageRightMenu").width(rightPctg + "%");
+					
+					$(window).resize(reAlighDIVs);
+				}
+			});
+
+			$(".pageRightMenu").resizable({	
+				animate: false,	
+				handles: "w",
+                maxWidth: $(".pageHeader").prop("clientWidth")*.45,
+				resize: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+					$(window).off('resize');
+
+					rightWidth = $(".pageRightMenu").outerWidth(true);
+					midWidth = $(".pageHeader").prop("clientWidth") - $(".pageLeftMenu").outerWidth(true) - rightWidth;
+					$(".pageContent").innerWidth(midWidth-1);
+					$(".pageRightMenu").width(rightWidth);
+
+				},
+				stop: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+                    let totWidth =  $(".pageHeader").prop("clientWidth");
+					    rightWidth = $(".pageRightMenu").outerWidth(true);
+                        leftWidth = $(".pageLeftMenu").outerWidth(true);
+					    midWidth = totWidth - leftWidth - rightWidth;
+
+
+					rightPctg = Math.round(100.0*rightWidth/totWidth),
+					midPctg =  Math.round(100.0*midWidth/totWidth),
+					leftPctg = 100 - rightPctg - midPctg;
+
+					$(".pageContent").innerWidth(midPctg + "%");
+                    $(".pageLeftMenu").width(leftPctg + "%")
+					$(".pageRightMenu").width(rightPctg + "%");
+					
+					$(window).resize(reAlighDIVs);
+				}
+			});
+            $(document).ready(reAlighDIVs);
+		    $(window).resize(reAlighDIVs);
+		});
+	</script>
+</head>
+
+<body>
+	<div class="blended_grid">
+		<div class="pageHeader">
+            
+            <div>Andrew Kittredge<br>
+            GTECH 78534<br>
+            Assignment 5</div>
+            <div>Surface Temperature in New York City: 1985 - 2022</div>
+            
+		</div>
+		<div class="pageLeftMenu">
+		</div>
+		<div class="pageContent">
+            <div id="map"></div>
+		</div>
+		<div class="pageRightMenu">
+		</div>
+		<div class="pageFooter">
+		</div>
+	</div>
+</body>
+
+<script>
+    var map = L.map('map', {
+		fullscreenControl: true,
+	}).setView([40.68, -73.94], 11);
+
+            var baseLayer = L.tileLayer.provider("Esri.WorldGrayCanvas").addTo(map);
+			var baseLayer2 = L.tileLayer.provider("Esri.WorldImagery");
+
+			var nycAerialTiles = L.tileLayer(
+				"https://maps.nyc.gov/xyz/1.0.0/photo/2018/{z}/{x}/{y}.png8",
+				{
+					maxZoom: 19
+				}
+			); 
+
+			var nycLabelTiles = L.tileLayer(
+				"https://maps.nyc.gov/xyz/1.0.0/carto/label-lt/{z}/{x}/{y}.png8",
+				{
+					maxZoom: 19
+				}
+			);
+			
+            var tractData = L.geoJson(null).bindTooltip(l => {
+                return "<strong> GISJOIN: </strong>" + l.feature.properties.GISJOIN + "<br><strong> HOLC Grade: </strong>" + l.feature.properties.holc_grade
+                + "<br><strong> Mean Summer Surface Temperature: " + l.feature.properties.t1985_1989.toFixed(2) + "˚ F";
+                }
+            );
+
+			tractData.addTo(map);
+
+            fetch('./meanTemp_summer4.geojson')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    // console.log(data);
+                    var maxVal = -Infinity, minVal = Infinity;
+                    var allVals = [];
+					
+
+
+                    data.features.forEach((f,i) => {
+                        maxVal = Math.max(maxVal, f.properties.t1985_1989);
+                        minVal = Math.min(minVal, f.properties.t1985_1989);
+                        allVals.push(f.properties.t1985_1989);
+                    });
+
+                    var valRange = maxVal - minVal;
+					var dMn = [minVal, maxVal];
+                    var colIntpl = d3.scaleQuantize()
+                        .domain(dMn)
+                        .range(d3.schemeOrRd[9]);
+                    tractData.options.style = (f) => {
+                        return {
+                            fillColor: colIntpl(f.properties.t1985_1989),
+                            color: '#fff',
+                            weight: 0.4,
+                            fillOpacity: 0.8
+                        }
+                    };
+
+                    tractData.addData(data);
+                });
+			
+			var coolingSites = L.geoJson(null, {
+				pointToLayer: function(feature, latlng) {
+					return L.marker(latlng);
+				},
+				onEachFeature: (f, l) => {
+                    //var pointPopup = 
+					//"<p><b>Cooling Feature Type: </b>" +
+					//f.properties.FeatureType +
+					//"<br><b> Location: </b>" +
+					//f.properties.PropertyName +
+					//"</p>";
+                    
+                    //if (f.properties && f.properties.popupContent) {
+                    //    popupContent += f.properties.popupContent;
+                    //}
+					//l.bindPopup(pointPopup);
+					
+					l.addEventListener("click", pointInfo);
+                    
+                    l.on({
+                        click: (e) => {
+                            //console.log(e.latlng);
+                            //console.log(e.target.feature.geometry.coordinates);
+                            //console.log(coolingSites.toGeoJSON());
+                            var coord = e.latlng;
+                            var lat = coord.lat;
+                            var lng = coord.lng;
+
+							var turf_fc = turf.featureCollection(coolingSites);
+							var turf_point = turf.point([lng, lat]);
+							//console.log(turf_point)
+
+							var i = 0;
+							var closestPoints = [];
+							coolingSites_gjson = coolingSites.toGeoJSON();
+							//console.log("coolingSitestoGeoJSON(): ",coolingSites.toGeoJSON());
+							while (i<2){
+								var closest_point = turf.nearestPoint(turf_point, coolingSites_gjson);
+								closestPoints.push(closest_point);
+								var id = closest_point.properties.featureIndex;
+								console.log(id);
+								coolingSites_gjson.features.splice(id, 1);
+								i++;
+							}
+							
+							var clickNearestPoint = closestPoints[1];
+							console.log("nearest point", clickNearestPoint);
+							
+							nearest_featureType = clickNearestPoint.properties.FeatureType;
+							nearest_propertyName = clickNearestPoint.properties.PropertyName;
+
+							//console.log(nearest_featureType);
+                        }
+                    });
+                }
+			});
+            
+			function pointInfo (e) {
+				info_p.innerHTML = 
+					e.target.feature.properties.FeatureType + "<br>" +
+					e.target.feature.properties.PropertyName + "<br>";
+
+			};
+
+			function nearestInfo(nearest_featureType, nearest_propertyName) {
+				info_nearest.innerHTML = 
+					nearest_featureType + "<br>" +
+					nearest_propertyName + "<br>";
+			}
+
+			var nearest_featureType;
+			var nearest_propertyName;
+
+			var info = L.control({position: "bottomright"});
+			info.onAdd = function() {
+				let div = L.DomUtil.create("div", "info");
+				div.innerHTML = '<b>Selected Cooling Site:</b><p id="current_feature"></p><br><b>Nearest Cooling Site:</b><p id="nearest_feature"</p>';
+				return div;
+			};
+			info.addTo(map);
+
+			var info_p = document.getElementById("current_feature");
+			var info_nearest = document.getElementById("nearest_feature");
+
+			$.getJSON("./CoolingSites.geojson", function (data) {
+				coolingSites.addData(data);
+				//console.log('GeoJSON data loaded:', data);
+			});
+
+			var baseMaps = {
+				"MapBox Light": baseLayer,
+				"NYC Aerial Photography": baseLayer2,
+			};
+
+			var overlayMaps = {
+				"Surface Temperature 1985-1989": tractData,
+				"Cooling Sites": coolingSites,
+			};
+
+			var layerControl = L.control
+				.layers(baseMaps, overlayMaps, {
+					collapsed: false,
+					hideSingleBase: true,
+				})
+				.addTo(map)
+				.expand();
+			
+			
+			var osmGeocoderControl = new L.Control.Search({
+				url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}&countrycodes=us',
+				jsonpParam: 'json_callback',
+				propertyName: 'display_name',
+				propertyLoc: ['lat', 'lon'],
+				marker: L.circleMarker([0, 0], { radius: 30 }),
+				autoCollapse: true,
+				autoType: false,
+				minLength: 2,
+				position: 'topleft',
+				container: '',
+				moveToLocation: (latlng, name, map) => {
+					tractData.eachLayer((l) => {
+						console.log(Date.now());
+						if (turf.booleanPointInPolygon(turf.point([latlng.lng, latlng.lat]), l.feature)) {
+							l.setStyle({fillColor: "#ffffff",
+										fillOpacity: 0.5,
+										color: "#a6d96a"});
+							return;
+						}
+					});
+	
+					map.setView(latlng, 16);
+				}
+			});
+	
+			map.addControl(osmGeocoderControl);
+			
+
+
+</script>
+
+</html>
