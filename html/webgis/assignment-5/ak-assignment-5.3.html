@@ -350,34 +350,31 @@
 								var closest_point = turf.nearestPoint(turf_point, coolingSites_gjson);
 								closestPoints.push(closest_point);
 								var id = closest_point.properties.featureIndex;
-								console.log(id);
+								console.log("id", id);
 								coolingSites_gjson.features.splice(id, 1);
 								i++;
 							}
 							
 							var clickNearestPoint = closestPoints[1];
-							console.log("nearest point", clickNearestPoint);
+							
 							
 							nearest_featureType = clickNearestPoint.properties.FeatureType;
 							nearest_propertyName = clickNearestPoint.properties.PropertyName;
 							
-							// MOVING THIS HERE MADE IT WORK!!
-							l.addEventListener("click", pointInfo); 
 
+
+							info_p.innerHTML = 
+								e.target.feature.properties.FeatureType + "<br>" +
+								e.target.feature.properties.PropertyName + "<br>";
+							info_nearest.innerHTML = 
+								nearest_featureType + "<br>" +
+								nearest_propertyName;
                         }
                     });
                 }
 			});
             
-			function pointInfo (e) {
-				info_p.innerHTML = 
-					e.target.feature.properties.FeatureType + "<br>" +
-					e.target.feature.properties.PropertyName + "<br>";
-				info_nearest.innerHTML = 
-					nearest_featureType + "<br>" +
-					nearest_propertyName;
 
-			};
 
 			var nearest_featureType;
 			var nearest_propertyName;
