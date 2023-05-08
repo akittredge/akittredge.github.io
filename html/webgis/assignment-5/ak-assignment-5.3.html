@@ -297,6 +297,24 @@
                     tractData.addData(data);
                 });
 			
+			var greenIcon = new L.Icon({
+				iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+				shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+				iconSize: [25, 41],
+				iconAnchor: [12, 41],
+				popupAnchor: [1, -34],
+				shadowSize: [41, 41]
+				});
+
+			var yellowIcon = new L.Icon({
+				iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png',
+				shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+				iconSize: [25, 41],
+				iconAnchor: [12, 41],
+				popupAnchor: [1, -34],
+				shadowSize: [41, 41]
+				});
+
 			var coolingSites = L.geoJson(null, {
 				pointToLayer: function(feature, latlng) {
 					return L.marker(latlng);
@@ -314,25 +332,20 @@
                     //}
 					//l.bindPopup(pointPopup);
 					
-					l.addEventListener("click", pointInfo);
+					//l.addEventListener("click", pointInfo);
                     
                     l.on({
                         click: (e) => {
-                            //console.log(e.latlng);
-                            //console.log(e.target.feature.geometry.coordinates);
-                            //console.log(coolingSites.toGeoJSON());
                             var coord = e.latlng;
                             var lat = coord.lat;
                             var lng = coord.lng;
 
 							var turf_fc = turf.featureCollection(coolingSites);
 							var turf_point = turf.point([lng, lat]);
-							//console.log(turf_point)
 
 							var i = 0;
 							var closestPoints = [];
 							coolingSites_gjson = coolingSites.toGeoJSON();
-							//console.log("coolingSitestoGeoJSON(): ",coolingSites.toGeoJSON());
 							while (i<2){
 								var closest_point = turf.nearestPoint(turf_point, coolingSites_gjson);
 								closestPoints.push(closest_point);
@@ -347,8 +360,10 @@
 							
 							nearest_featureType = clickNearestPoint.properties.FeatureType;
 							nearest_propertyName = clickNearestPoint.properties.PropertyName;
+							
+							// MOVING THIS HERE MADE IT WORK!!
+							l.addEventListener("click", pointInfo); 
 
-							//console.log(nearest_featureType);
                         }
                     });
                 }
@@ -358,14 +373,11 @@
 				info_p.innerHTML = 
 					e.target.feature.properties.FeatureType + "<br>" +
 					e.target.feature.properties.PropertyName + "<br>";
-
-			};
-
-			function nearestInfo(nearest_featureType, nearest_propertyName) {
 				info_nearest.innerHTML = 
 					nearest_featureType + "<br>" +
-					nearest_propertyName + "<br>";
-			}
+					nearest_propertyName;
+
+			};
 
 			var nearest_featureType;
 			var nearest_propertyName;
