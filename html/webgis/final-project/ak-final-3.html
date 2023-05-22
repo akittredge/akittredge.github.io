@@ -141,7 +141,7 @@
 			float: left;
 			clear: none;
 			height: 1250px;
-			width: 5%;
+			width: 1%;
 		}
 
 		.pageContent {
@@ -149,7 +149,7 @@
 			float: left;
 			clear: none;
 			height: 1250px;
-			width: 90%;
+			width: 98%;
 		}
 
 		.pageRightMenu {
@@ -158,7 +158,7 @@
 			clear: none;
 			overflow: auto;
 			height: 1250px;
-			width: 5%;
+			width: 1%;
 			left:0 !important;
 			
 		}
@@ -218,7 +218,7 @@
 	<meta name="description" content="Write some words to describe your html page">
 
 	<script>
-		let leftPctg = 5, midPctg = 90, rightPctg = 5;
+		let leftPctg = 1, midPctg = 98, rightPctg = 1;
 		let reAlignDIVs = () => {
 			let midHeight = window.innerHeight - $(".pageHeader").height() - $(".pageFooter").height();
 			$(".pageContent").height(midHeight).width(midPctg+"%");
@@ -346,7 +346,7 @@
     var map = L.map('map', {
 		fullscreenControl: true,
 		renderer: L.svg({ padding: 100 })
-	}).setView([40.6, -73.94], 11);
+	}).setView([40.55, -73.94], 11);
 
     map.createPane("circleMarkers");
     map.createPane("polygons");
@@ -376,7 +376,6 @@
     {era: "t2020_2022", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null}
     ];
 
-    // Era layers
     var eraLayers = L.layerGroup();
 
     eraFields.forEach((v,i) => {
@@ -436,7 +435,7 @@
 		var cellRound = function(value, data, type, params, component){
 			return value.toFixed(2);
 		};
-		
+
         eraFields.forEach((v,i) => {
             v.colIntpl = d3.scaleQuantize()
                 .domain([80,120])
@@ -446,13 +445,11 @@
         eraFields.forEach((v) => {
             v.layer.addData(data);
         });
-
     });
 
-    current_layer = eraFields[0]
+    var current_layer = eraFields[0]
 
     eraFields[0].layer.addTo(map);
-
 
 	var coolingSites = L.geoJson(null, {
 		pointToLayer: function(feature, latlng) {
@@ -462,7 +459,6 @@
 				weight: 2	,
 				color: "#2b8cbe",
 				radius: 6,
-
 			});
 		},
         pane: "circleMarkers",
@@ -473,48 +469,13 @@
 					coolingSites.resetStyle();
 					e.target.setStyle({fillColor: "#00FF00",
                                         fillOpacity: 0.7});
-					var coord = e.latlng;
-					var lat = coord.lat;
-					var lng = coord.lng;
-
-					var turf_fc = turf.featureCollection(coolingSites);
-					var turf_point = turf.point([lng, lat]);
-
-					var i = 0;
-					var closestPoints = [];
-					coolingSites_gjson = coolingSites.toGeoJSON();
-					while (i<2){
-						var closest_point = turf.nearestPoint(turf_point, coolingSites_gjson);
-						closestPoints.push(closest_point);
-						var id = closest_point.properties.featureIndex;
-						//console.log("id", id);
-						coolingSites_gjson.features.splice(id, 1);
-						i++;
-					}
-					
-					var clickNearestPoint = closestPoints[1];
-					//clickNearestPoint.setStyle({fillColor: "#0000FF"});
-					
-					//nearest_featureType = clickNearestPoint.properties.FeatureType;
-					//nearest_propertyName = clickNearestPoint.properties.PropertyName;
-					
-
 					info_p.innerHTML = 
 						e.target.feature.properties.FeatureType + "<br>" +
 						e.target.feature.properties.PropertyName;
-					//info_nearest.innerHTML = 
-						//nearest_featureType + "<br>" +
-						//nearest_propertyName;
 				}
 			});
 		}
 	});
-
-    //coolingSites.createPane('markers');
-    //coolingSites.getPane('markers').style.zIndex = 600;
-	
-	var nearest_featureType;
-	var nearest_propertyName;
 
 	var info = L.control({position: "bottomright"});
 	info.onAdd = function() {
@@ -527,12 +488,11 @@
 
 	var info_tract = document.getElementById("selected_tract");
 	var info_p = document.getElementById("current_feature");
-	//var info_nearest = document.getElementById("nearest_feature");
+
 	
 
 	$.getJSON("./CoolingSites.geojson", function (data) {
 		coolingSites.addData(data);
-		//console.log('GeoJSON data loaded:', data);
 	});
 
 	var baseMaps = {
@@ -589,10 +549,8 @@
 	};
 
 	changeMapFunction = function( {label, value, map, exclamation} ) {
-		//console.log(label);
 		map.removeLayer(current_layer);
 		current_layer = eraSelect(label);
-		//console.log(current_layer);
 		map.addLayer(current_layer);
 	};
 
