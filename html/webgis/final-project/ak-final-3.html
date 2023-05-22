@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+	
+	<script src="js/leaflet-providers.js"></script>
+
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'
+        rel='stylesheet' />
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+
+	<script src='./js/leaflet-search.js'></script>
+    <link href='./css/leaflet-search.min.css' rel='stylesheet' />
+	<script src="https://npmcdn.com/leaflet-geometryutil"></script>
+	<script src='./js/leaflet-timeline-slider.js'></script>
+
+	<link href="https://unpkg.com/tabulator-tables@5.4.4/dist/css/tabulator.min.css" rel="stylesheet">
+ 	<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.4.4/dist/js/tabulator.min.js"></script>
+
+	<link rel="shortcut icon" href="images/ak-favicon.png">
+    
+	<style>
+		
+		body {
+			height: 100%;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			border: 0;
+			background-attachment: fixed;
+			background-size: 100% auto;
+		}
+
+		.blended_grid {
+			display: block;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			margin: 0px auto 0 auto;
+		}
+
+		.pageHeader {
+			display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #eff3ff;
+			float: left;
+			clear: none;
+			height: 100px;
+			width: 100%;
+            font-family:sans-serif;
+            font-weight: bold;
+		}
+
+		.button {
+			font-family:sans-serif;
+            font-weight: bold;
+			color: "#000000"
+
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(0, 0, 0, 0.7);
+			transition: opacity 200ms;
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		.overlay:target {
+			visibility: visible;
+			opacity: 1;
+			z-index: 2;
+		}
+
+		.popup {
+			margin: 70px auto;
+			padding: 20px;
+			background: #fff;
+			border-radius: 5px;
+			width: 30%;
+			position: relative;
+			transition: all 25ms;
+			z-index: 2;
+		}
+		
+		.popup h2 {
+			margin-top: 0;
+			color: #000000;
+			font-family: sans-serif;
+			z-index: 2;
+			text-align: center;
+		}
+		.popup .close {
+			position: absolute;
+			top: 20px;
+			right: 30px;
+			transition: all 100ms;
+			font-size: 30px;
+			font-weight: bold;
+			text-decoration: none;
+			color: #000000;
+			z-index: 2;
+		}
+		.popup .close:hover {
+			color: #d7301f;
+			z-index: 2;
+		}
+		.popup .content {
+			max-height: 30%;
+			overflow: auto;
+			z-index: 2;
+			font-family:sans-serif;
+			transition: all 100ms;
+		}
+		@media screen and (max-width: 800px){
+
+			.popup{
+				width: 70%;
+				z-index: 2;
+			}
+		}
+
+		.pageLeftMenu {
+			background-color: #eff3ff;
+			float: left;
+			clear: none;
+			height: 1250px;
+			width: 5%;
+		}
+
+		.pageContent {
+			background-color: rgba(0, 0, 0, 0.5);
+			float: left;
+			clear: none;
+			height: 1250px;
+			width: 90%;
+		}
+
+		.pageRightMenu {
+			background-color: #eff3ff;
+			float: right;
+			clear: none;
+			overflow: auto;
+			height: 1250px;
+			width: 5%;
+			left:0 !important;
+			
+		}
+
+		.pageFooter {
+			background-color: #eff3ff;
+			float: left;
+			clear: none;
+			height: 50px;
+			width: 100%;
+		}
+
+        #map {
+            height: 100%;
+            width: 100%;
+			z-index: 1;
+        }
+
+		.info {
+			padding: 6px 8px;
+			font: 12px/14px Arial, Helvetica, sans-serif;
+			background: rgba(255,255,255,1);
+			box-shadow: none;
+			border-radius: 5px;
+			border: 2px solid rgba(0,0,0,0.2);
+			width: 16.5em;
+		}
+
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777777;
+		}
+		.info #current_feature {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		.info #selected_tract {
+			margin-top: 10px;
+			margin-bottom: 5px;
+		}
+		
+		.highlight {
+			background-color: yellow;
+		}
+
+		a {
+			color:#000000
+		}
+
+		a:visited {
+			color:#000000
+		}
+	</style>
+
+	<title>NYC Land Surface Temperature</title>
+	<meta name="description" content="Write some words to describe your html page">
+
+	<script>
+		let leftPctg = 5, midPctg = 90, rightPctg = 5;
+		let reAlignDIVs = () => {
+			let midHeight = window.innerHeight - $(".pageHeader").height() - $(".pageFooter").height();
+			$(".pageContent").height(midHeight).width(midPctg+"%");
+			$(".pageLeftMenu").height(midHeight).width(leftPctg+"%");
+			$(".pageRightMenu").height(midHeight).width(rightPctg+"%");
+
+            $(".pageLeftMenu").resizable("instance").option("maxWidth", $(".pageHeader").prop("clientWidth")*.45);
+			$(".pageRightMenu").resizable("instance").option("maxWidth", $(".pageHeader").prop("clientWidth")*.45);
+			}
+
+		$(function () { // Document ready event
+			$(".pageLeftMenu").resizable({
+				animate: false,
+				handles: "e",
+                maxWidth: $(".pageHeader").prop("clientWidth")*.45,
+				resize: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+					$(window).off('resize');
+
+					let rightWidth = $(".pageRightMenu").outerWidth(true);
+					let midWidth = $(".pageHeader").prop("clientWidth") - $(".pageLeftMenu").outerWidth(true) - rightWidth;
+					$(".pageContent").innerWidth(midWidth-1);
+					$(".pageRightMenu").width(rightWidth);
+				},
+				stop: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+                    let totWidth =  $(".pageHeader").prop("clientWidth");
+                    let rightWidth = $(".pageRightMenu").outerWidth(true);
+                    let leftWidth = $(".pageLeftMenu").outerWidth(true);
+                    let midWidth = totWidth - leftWidth - rightWidth;
+
+                    let leftPctg = Math.round(100.0*leftWidth/totWidth);
+                    let midPctg =  Math.round(100.0*midWidth/totWidth);
+                    let rightPctg = 100 - leftPctg - midPctg;
+
+					$(".pageContent").innerWidth(midPctg + "%");
+                    $(".pageLeftMenu").width(leftPctg + "%")
+					$(".pageRightMenu").width(rightPctg + "%");
+					
+					$(window).resize(reAlignDIVs);
+				}
+			});
+
+			$(".pageRightMenu").resizable({	
+				animate: false,	
+				handles: "w",
+                maxWidth: $(".pageHeader").prop("clientWidth")*.45,
+				resize: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+					$(window).off('resize');
+
+					rightWidth = $(".pageRightMenu").outerWidth(true);
+					midWidth = $(".pageHeader").prop("clientWidth") - $(".pageLeftMenu").outerWidth(true) - rightWidth;
+					$(".pageContent").innerWidth(midWidth-1);
+					$(".pageRightMenu").width(rightWidth);
+
+				},
+				stop: function (event, ui) { // Event triggered by the resize on the drag of the resize handler
+                    let totWidth =  $(".pageHeader").prop("clientWidth");
+					let rightWidth = $(".pageRightMenu").outerWidth(true);
+                    let leftWidth = $(".pageLeftMenu").outerWidth(true);
+					let midWidth = totWidth - leftWidth - rightWidth;
+
+
+					rightPctg = Math.round(100.0*rightWidth/totWidth),
+					midPctg =  Math.round(100.0*midWidth/totWidth),
+					leftPctg = 100 - rightPctg - midPctg;
+
+					$(".pageContent").innerWidth(midPctg + "%");
+                    $(".pageLeftMenu").width(leftPctg + "%")
+					$(".pageRightMenu").width(rightPctg + "%");
+					
+					$(window).resize(reAlignDIVs);
+				}
+			});
+            $(document).ready(reAlignDIVs);
+		    $(window).resize(reAlignDIVs);
+		})      
+        $("a[href='.pageContent']").on('shown.bs.tab', function(e) {
+            map.invalidateSize();
+        });
+	</script>
+</head>
+
+<body>
+	<div class="blended_grid">
+		<div class="pageHeader">
+            
+            <div>Andrew Kittredge<br>
+            GTECH 78534<br>
+            Final Project</div>
+
+			<div>
+				<a class="button" href="#popup1">About</a>
+			</div>
+
+            <div>Surface Temperature in New York City: 1985 - 2022</div>
+            
+		</div>
+		<div class="pageLeftMenu">
+		</div>
+		<div class="pageContent">
+            <div id="map"></div>
+			
+		</div>
+		<div class="pageRightMenu">
+		</div>
+		<div class="pageFooter">
+		</div>
+		<div id="popup1" class="overlay">
+			<div class="popup">
+				<h2>Functionality</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+	<ul>
+	<li>Basic web map functionality is accessed in the upper left hand corner of the WebGIS.</li><br>
+	<li>In the lower left-hand corner, an interactive timeline slider changes the surface temperature layer displayed on the map. The slider controls eight layers, each corresponding to a sequential five-year time period between 1985 and 2022. Within each layer, census tract fill color corresponds to the mean surface temperature in the tract during the selected time period.</li><br>
+	<li>Layer control is found in the upper right hand corner of the web map.</li><br>
+	<li>The lower right hand corner of the map displays information about clicked cooling sites and census tracts. </li>
+	</ul>					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script>
+    var map = L.map('map', {
+		fullscreenControl: true,
+		renderer: L.svg({ padding: 100 })
+	}).setView([40.6, -73.94], 11);
+
+    map.createPane("circleMarkers");
+    map.createPane("polygons");
+
+    map.getPane("circleMarkers").style.zIndex = "360";
+    map.getPane("polygons").style.zIndex = "340";
+
+    map.on('drag', () => {
+		map.fitBounds(map.getBounds());
+	});
+
+    var baseLayer = L.tileLayer.provider("Esri.WorldGrayCanvas").addTo(map);
+	var baseLayer2 = L.tileLayer.provider("Esri.WorldImagery");
+
+	// Array for each GeoJSON layer from a single GeoJSON file
+    // Each era "column" will be a layer
+    // Temperatures hard coded for shared temperature scale
+
+    var eraFields =[
+    {era: "t1985_1989", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t1990_1994", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t1995_1999", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t2000_2004", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t2005_2009", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t2010_2014", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t2015_2019", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null},
+    {era: "t2020_2022", minMaxVals: [80,120], colIntpl: null, controlID: "#", layer: null}
+    ];
+
+    // Era layers
+    var eraLayers = L.layerGroup();
+
+    eraFields.forEach((v,i) => {
+        v.layer = L.geoJson(null, {
+            onEachFeature: (feature, layer) => {
+                let toolTipInfo = "<strong> GISJOIN: </strong>" + layer.feature.properties.GISJOIN + "<br><strong> HOLC Grade: </strong>" + layer.feature.properties.holc_grade
+                                + "<br><strong> Heat Cluster Ranking (0-24): </strong>" + layer.feature.properties.lisaFlag
+								+ "<br><strong> Mean Summer Surface Temperature: </strong>" + layer.feature.properties[v.era].toFixed(2) + "˚ F";
+                
+                layer.bindTooltip(toolTipInfo);
+
+                layer.setStyle({
+                    fillColor: v.colIntpl(feature.properties[v.era]),
+                    fillOpacity: 0.8,
+                    color: '#fff',
+                    weight: 0.4
+                });
+                layer.on({
+					click: (e) => {
+						current_layer.setStyle({color: '#fff', weight: 0.4});
+						e.target.setStyle({color: "#2b8cbe", weight: 3.0})
+
+						let tempTrend;
+						
+						if (e.target.feature.properties.t2020_2022 - e.target.feature.properties.t1985_1989 > 0) {
+							tempTrend = "Mean summer LST has increased in this tract since 1985"
+						};
+						
+						if (e.target.feature.properties.t2020_2022 - e.target.feature.properties.t1985_1989 < 0) {
+							tempTrend = "Mean summer LST has decreased in this tract since 1985"
+						};
+						info_tract.innerHTML = 
+							"<strong>1985 - 1989: </strong>" + e.target.feature.properties.t1985_1989.toFixed(2) + " ˚F <br>" +
+							"<strong>1990 - 1994: </strong>" + e.target.feature.properties.t1990_1994.toFixed(2) + " ˚F <br>" +
+							"<strong>1995 - 1999: </strong>" + e.target.feature.properties.t1995_1999.toFixed(2) + " ˚F <br>" +
+							"<strong>2000 - 2004: </strong>" + e.target.feature.properties.t2000_2004.toFixed(2) + " ˚F <br>" +
+							"<strong>2005 - 2009: </strong>" + e.target.feature.properties.t2005_2009.toFixed(2) + " ˚F <br>" +
+							"<strong>2010 - 2014: </strong>" + e.target.feature.properties.t2010_2014.toFixed(2) + " ˚F <br>" +
+							"<strong>2015 - 2019: </strong>" + e.target.feature.properties.t2015_2019.toFixed(2) + " ˚F <br>" +
+							"<strong>2020 - 2022: </strong>" + e.target.feature.properties.t2020_2022.toFixed(2) + " ˚F <br>" +
+							"<br><strong>" + tempTrend + "<br>";
+					}
+				});
+            },
+            pane: "polygons"
+        });
+    });
+
+    $.getJSON("./meanTemp_summer_final.geojson", (data) => {
+		var tableArray = [];
+		
+		data.features.forEach((f) => {
+			var props = f.properties;
+			tableArray.push(props);
+		});
+
+		var cellRound = function(value, data, type, params, component){
+			return value.toFixed(2);
+		};
+		
+        eraFields.forEach((v,i) => {
+            v.colIntpl = d3.scaleQuantize()
+                .domain([80,120])
+                .range(d3.schemeOrRd[9]);
+        });
+
+        eraFields.forEach((v) => {
+            v.layer.addData(data);
+        });
+
+    });
+
+    current_layer = eraFields[0]
+
+    eraFields[0].layer.addTo(map);
+
+
+	var coolingSites = L.geoJson(null, {
+		pointToLayer: function(feature, latlng) {
+			return L.circleMarker(latlng,
+			{
+				stroke: true,
+				weight: 2	,
+				color: "#2b8cbe",
+				radius: 6,
+
+			});
+		},
+        pane: "circleMarkers",
+        
+		onEachFeature: (f, l) => {
+			l.on({
+				click: (e) => {
+					coolingSites.resetStyle();
+					e.target.setStyle({fillColor: "#00FF00",
+                                        fillOpacity: 0.7});
+					var coord = e.latlng;
+					var lat = coord.lat;
+					var lng = coord.lng;
+
+					var turf_fc = turf.featureCollection(coolingSites);
+					var turf_point = turf.point([lng, lat]);
+
+					var i = 0;
+					var closestPoints = [];
+					coolingSites_gjson = coolingSites.toGeoJSON();
+					while (i<2){
+						var closest_point = turf.nearestPoint(turf_point, coolingSites_gjson);
+						closestPoints.push(closest_point);
+						var id = closest_point.properties.featureIndex;
+						//console.log("id", id);
+						coolingSites_gjson.features.splice(id, 1);
+						i++;
+					}
+					
+					var clickNearestPoint = closestPoints[1];
+					//clickNearestPoint.setStyle({fillColor: "#0000FF"});
+					
+					//nearest_featureType = clickNearestPoint.properties.FeatureType;
+					//nearest_propertyName = clickNearestPoint.properties.PropertyName;
+					
+
+					info_p.innerHTML = 
+						e.target.feature.properties.FeatureType + "<br>" +
+						e.target.feature.properties.PropertyName;
+					//info_nearest.innerHTML = 
+						//nearest_featureType + "<br>" +
+						//nearest_propertyName;
+				}
+			});
+		}
+	});
+
+    //coolingSites.createPane('markers');
+    //coolingSites.getPane('markers').style.zIndex = 600;
+	
+	var nearest_featureType;
+	var nearest_propertyName;
+
+	var info = L.control({position: "bottomright"});
+	info.onAdd = function() {
+		let div = L.DomUtil.create("div", "info");
+		div.innerHTML = '<b>Selected Cooling Site:</b><p id="current_feature"></p><br>' + '<b>Selected Tract:</b><p id="selected_tract"</p><br>';
+		return div;
+	};
+	info.addTo(map);
+
+
+	var info_tract = document.getElementById("selected_tract");
+	var info_p = document.getElementById("current_feature");
+	//var info_nearest = document.getElementById("nearest_feature");
+	
+
+	$.getJSON("./CoolingSites.geojson", function (data) {
+		coolingSites.addData(data);
+		//console.log('GeoJSON data loaded:', data);
+	});
+
+	var baseMaps = {
+		"ESRI World Grey Canvas": baseLayer,
+		"ESRI World Imagery": baseLayer2,
+	};
+
+	var overlayMaps = {
+		"Cooling Sites": coolingSites,
+	};
+
+	var layerControl = L.control
+		.layers(baseMaps, overlayMaps, {
+			collapsed: false,
+			hideSingleBase: true,
+		})
+		.addTo(map)
+		.expand();
+	
+	var osmGeocoderControl = new L.Control.Search({
+		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}&countrycodes=us',
+		jsonpParam: 'json_callback',
+		propertyName: 'display_name',
+		propertyLoc: ['lat', 'lon'],
+		marker: L.circleMarker([0, 0], {radius: 30}),
+		autoCollapse: true,
+		autoType: false,
+		minLength: 2,
+		position: 'topleft',
+		container: '',
+		moveToLocation: (latlng, name, map) => {
+			current_layer.eachLayer((l) => {
+				if (turf.booleanPointInPolygon(turf.point([latlng.lng, latlng.lat]), l.feature)) {
+					l.setStyle({color: "#2b8cbe", weight: 3.0});
+					return;
+				}
+			});
+
+			map.setView(latlng, 16);
+		}
+	});
+	
+	map.addControl(osmGeocoderControl);
+
+	function eraSelect(era){
+		if (era == "1985-1989") return eraFields[0].layer;
+		if (era == "1990-1994") return eraFields[1].layer;
+		if (era == "1995-1999") return eraFields[2].layer;
+        if (era == "2000-2004") return eraFields[3].layer;
+        if (era == "2005-2009") return eraFields[4].layer;
+        if (era == "2010-2014") return eraFields[5].layer;
+        if (era == "2015-2019") return eraFields[6].layer;
+        if (era == "2020-2022") return eraFields[7].layer;
+	};
+
+	changeMapFunction = function( {label, value, map, exclamation} ) {
+		//console.log(label);
+		map.removeLayer(current_layer);
+		current_layer = eraSelect(label);
+		//console.log(current_layer);
+		map.addLayer(current_layer);
+	};
+
+	L.control.timelineSlider({
+		timelineItems: ["1985-1989", 
+						"1990-1994",
+						"1995-1999",
+						"2000-2004",
+						"2005-2009",
+						"2010-2014",
+						"2015-2019",
+						"2020-2022"],
+        changeMap: changeMapFunction, 
+		position: "bottomleft"},
+		initializeChange = "False")
+	.addTo(map);
+
+</script>
+
+</html>
